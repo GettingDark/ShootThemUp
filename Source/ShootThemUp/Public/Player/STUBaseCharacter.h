@@ -10,6 +10,7 @@ class UCameraComponent;
 class USpringArmComponent;
 class USTUHealthComponent;
 class UTextRenderComponent;
+class USTUWeaponComponent;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
@@ -36,18 +37,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UTextRenderComponent* HealthTextComponent;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-    bool IsRunning() const;
-
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-    float GetMovementDirection() const;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	USTUWeaponComponent* WeaponComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* DeathAnimMontage;
@@ -60,6 +51,19 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	FVector2D LandedDamage = FVector2D(10.0f, 100.0f);
+
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	bool IsRunning() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	float GetMovementDirection() const;
 
 private:
     bool WantsToRun = false;
@@ -76,4 +80,6 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 	void OnGroundLanded(const FHitResult& Hit);
+
+
 };
